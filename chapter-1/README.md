@@ -35,3 +35,4 @@ npm install
 npm run start 
 ```
 
+![Screenshot 2023-12-21 at 10 29 47 PM](https://github.com/production-ready-59s/todo-app/assets/839210/ea067fd0-708c-4294-bc51-9bcdcb10c32e)
