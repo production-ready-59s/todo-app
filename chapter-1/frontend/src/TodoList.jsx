@@ -41,7 +41,7 @@ const TodoList = () => {
   };
 
   const handleTodoCompletedChange = (id) => {
-    const currentTodo = todos.find((todo) => todo._id == id);
+    const currentTodo = todos.find((todo) => todo._id === id);
 
     // send a PUT call to backend
     axios.put(`${ServerHost}/api/todos/${id}`, {completed: !currentTodo.completed})
@@ -59,8 +59,6 @@ const TodoList = () => {
   }
 
   const handleTodoNameChange = (id, newName) => {
-    const currentTodo = todos.find((todo) => todo._id == id);
-
     // send a PUT call to backend
     axios.put(`${ServerHost}/api/todos/${id}`, {name: newName})
       .then((response) => {
@@ -89,7 +87,7 @@ const TodoList = () => {
   }
 
   const toggleEditing = (id) => {
-    const currentIsEditing = todos.find((todo) => todo._id == id)?.isEditing;
+    const currentIsEditing = todos.find((todo) => todo._id === id)?.isEditing;
     setTodos((oldTodos) => {
       const updatedTodos = [...oldTodos];
       const todoIndex = updatedTodos.findIndex((todo) => todo._id === id);
@@ -99,11 +97,11 @@ const TodoList = () => {
   }
 
   return (
-    <div style={{padding: "30px"}}>
+    <div style={{padding: 30}}>
 
       <h1>Todo List</h1>
 
-      <form onSubmit={createTodo} style={{gap: "10px", display: "flex"}}>
+      <form onSubmit={createTodo} style={{gap: 10, display: "flex"}}>
         <input
           value={newTodoName}
           onChange={(e) => setNewTodoName(e.target.value)}
@@ -113,17 +111,18 @@ const TodoList = () => {
         <button type="submit">Add Todo</button>
       </form>
 
-      <ul>
+      <ul style={{paddingLeft: 5, width: 300}}>
         {todos.map((todo, index) => (
-          <div key={index} style={{"paddingBottom": "10px"}}>
+          <div key={index} style={{"paddingBottom": 10, display: "flex"}}>
             <input
               type="checkbox"
+              style={{marginRight: 10}}
               checked={todo.completed}
               onChange={() => handleTodoCompletedChange(todo._id)}
             />
             {todo.isEditing ? (
               <form
-                style={{display: 'inline'}}
+                style={{flexGrow: 1}}
                 onSubmit={(e) => {
                   e.preventDefault();
                   handleTodoNameChange(todo._id, e.target.todoName.value);
@@ -135,11 +134,15 @@ const TodoList = () => {
                 />
               </form>
             ) : (
-              <span onClick={() => toggleEditing(todo._id)}>
+              <span onClick={() => toggleEditing(todo._id)}
+                    style={{flexGrow: 1}}
+              >
                 {todo.name}
               </span>
             )}
-            <button style={{marginLeft: "10px"}} onClick={() => handleTodoDelete(todo._id)}>Delete</button>
+            <div onClick={() => handleTodoDelete(todo._id)}>
+              <img src="/trash.svg" style={{width: 20, height: 20}}/>
+            </div>
           </div>
         ))}
       </ul>
