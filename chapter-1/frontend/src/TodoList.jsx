@@ -135,7 +135,10 @@ const TodoList = () => {
               </form>
             ) : (
               <span onClick={() => toggleEditing(todo._id)}
-                    style={{flexGrow: 1}}
+                    style={{
+                      flexGrow: 1,
+                      textDecoration: todo.completed ? "line-through" : "none"
+                    }}
               >
                 {todo.name}
               </span>
